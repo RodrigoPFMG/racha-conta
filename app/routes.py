@@ -9,6 +9,11 @@ from app.services import dinheiro, validacao
 bp = Blueprint("main", __name__)
 
 
+@bp.app_template_filter("brl")
+def _filtro_brl(centavos):
+    return dinheiro.formatar_brl(centavos)
+
+
 @bp.route("/")
 def index():
     grupos = Grupo.query.order_by(Grupo.nome).all()

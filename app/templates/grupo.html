@@ -31,6 +31,18 @@
 
 <article class="cartao">
   <header><h2>Despesas</h2></header>
+  {% if grupo.despesas %}
+  <ul class="lista-despesas">
+    {% for despesa in grupo.despesas|sort(attribute="id", reverse=True) %}
+    <li>
+      <span><strong>{{ despesa.descricao }}</strong> · {{ despesa.valor_centavos|brl }} · pago por {{ despesa.pagador.nome }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="vazio">Nenhuma despesa ainda.</p>
+  {% endif %}
+
   {% if grupo.membros %}
   <form method="post" action="{{ url_for('main.registrar_despesa', grupo_id=grupo.id) }}">
     <label for="descricao-despesa">Descrição</label>
