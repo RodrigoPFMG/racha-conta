@@ -21,3 +21,28 @@ ou foi corrigido, e o que aprendeu.
   screenshots do Playwright e corrigiu o campo de texto espremido pelo botão.
   No caminho apareceu um bug real: `pytest` sem argumentos falhava porque havia
   dois `test_home.py`; resolvido com `--import-mode=importlib`.
+
+## Leo
+
+- **Despesas (2.0–2.3):** pedi ao Claude Code o merge do `validacao.py` do João,
+  a troca do `_ler_nome` por `validar_nome` e as rotas de registrar, listar e
+  excluir despesa em TDD. Ajuste: o primeiro rascunho de um teste juntava status
+  e mensagem numa tupla (`assert (400, True) == ...`); reescrevi em duas asserções
+  legíveis antes do commit. O screenshot do Playwright mostrou que, após um erro,
+  o form perde o que foi digitado (anotado, fora do escopo). Aprendi a comparar
+  sempre `int` com `int` ao validar ids vindos do form.
+
+- **Saldos e acertos (2.4–2.6):** pedi `calcular_saldos` e `sugerir_acertos`
+  como funções puras, com valores esperados escritos à mão, e a tela de saldos.
+  No teste de R$ 10,00 por três passei os participantes fora de ordem `(3, 1, 2)`
+  para provar que o centavo extra vai para o menor id. Conferi a tela com
+  screenshot (Ana a receber R$ 60,00; Bruno e Carla devem R$ 30,00). Aprendi que
+  o guloso "maior devedor paga ao maior credor" gera no máximo n − 1 acertos.
+
+- **Qualidade (2.7–2.8):** pedi cobertura e revisão dos testes da sessão. A
+  cobertura (98%) apontou que pagador e participante não numéricos nunca eram
+  testados na rota; viraram 3 testes e a cobertura foi a 100%. A revisão achou a
+  fixture `grupo_com_membros` duplicada em dois arquivos (foi para o `conftest.py`
+  da integração) e uma asserção negativa (`"pago por Ana" not in`) que passaria
+  mesmo com a lista quebrada; troquei por "Nenhuma despesa ainda.". Aprendi a
+  preferir asserções positivas.
