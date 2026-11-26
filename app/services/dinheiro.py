@@ -19,3 +19,11 @@ def reais_para_centavos(texto: str) -> int:
     else:
         raise ValueError(f"Valor inválido: {texto!r}. Use o formato 12,50.")
     return int(inteiro) * 100 + int(decimal.ljust(2, "0"))
+
+
+def formatar_brl(centavos: int) -> str:
+    """Formata centavos como moeda brasileira: 123456 -> "R$ 1.234,56"."""
+    sinal = "-" if centavos < 0 else ""
+    reais, resto = divmod(abs(centavos), 100)
+    reais_com_milhar = f"{reais:,}".replace(",", ".")
+    return f"{sinal}R$ {reais_com_milhar},{resto:02d}"
