@@ -3,7 +3,8 @@ import pytest
 from app.services.validacao import (
     validar_nome,
     validar_valor,
-    validar_pagador
+    validar_pagador,
+    validar_participantes,
 )
 
 
@@ -36,3 +37,16 @@ def test_validar_pagador_fora_do_grupo_lanca_erro():
 
 def test_validar_pagador_do_grupo_nao_lanca_erro():
     validar_pagador("Ana", ["Ana"])
+
+def test_validar_participantes_vazios_lanca_erro():
+    with pytest.raises(ValueError):
+        validar_participantes([], ["Ana"])
+
+
+def test_validar_participante_fora_do_grupo_lanca_erro():
+    with pytest.raises(ValueError):
+        validar_participantes(["Bia"], ["Ana"])
+
+
+def test_validar_participantes_do_grupo_nao_lanca_erro():
+    validar_participantes(["Ana"], ["Ana"])

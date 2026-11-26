@@ -19,3 +19,10 @@ def validar_pagador(pagador, membros) -> None:
     """Exige que o pagador pertença ao grupo."""
     if pagador not in membros:
         raise ValueError("O pagador deve ser um membro do grupo.")
+
+def validar_participantes(participantes, membros) -> None:
+    """Exige ao menos um participante e que todos pertençam ao grupo."""
+    if not participantes:
+        raise ValueError("Selecione ao menos um participante.")
+    if any(participante not in membros for participante in participantes):
+        raise ValueError("Todos os participantes devem pertencer ao grupo.")
