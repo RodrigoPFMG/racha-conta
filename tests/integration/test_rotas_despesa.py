@@ -105,3 +105,29 @@ def test_pagina_do_grupo_sem_despesas_mostra_mensagem_vazia(client, grupo_com_me
     resposta = client.get(grupo_com_membros)
 
     assert "Nenhuma despesa ainda." in resposta.get_data(as_text=True)
+
+
+def test_excluir_despesa_remove_da_lista(client, grupo_com_membros, despesa_valida):
+    client.post(f"{grupo_com_membros}/despesas", data=despesa_valida)
+    client.post(f"{grupo_com_membros}/despesas/1/excluir")
+
+    resposta = client.get(grupo_com_membros)
+
+    assert "pago por Ana" not in resposta.get_data(as_text=True)
+
+
+def test_excluir_despesa_redireciona_para_o_grupo(client, grupo_com_membros, despesa_valida):
+    client.post(f"{grupo_com_membros}/despesas", data=despesa_valida)
+
+    resposta = client.post(f"{grupo_com_membros}/despesas/1/excluir")
+
+    assert resposta.headers["Location"] == grupo_com_membros
+
+
+def test_excluir_despesa_de_outro_grupo_responde_404(client, grupo_com_membros, despesa_valida):
+    client.post(f"{grupo_com_membros}/despesas", data=despesa_valida)
+    client.post("/grupos", data={"nome": "Viagem"})
+
+    resposta = client.post("/grupos/2/despesas/1/excluir")
+
+    assert resposta.status_code == 404
