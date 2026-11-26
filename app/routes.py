@@ -1,6 +1,6 @@
 """Rotas finas: leem o formulário, chamam serviços e renderizam."""
 
-from flask import Blueprint, redirect, render_template, request, url_for
+from flask import Blueprint, abort, redirect, render_template, request, url_for
 
 from app import db
 from app.models import Despesa, Grupo, Membro
@@ -89,5 +89,16 @@ def registrar_despesa(grupo_id):
         grupo=grupo,
         participantes=participantes,
     ))
+    db.session.commit()
+    return redirect(url_for("main.ver_grupo", grupo_id=grupo.id))
+
+
+@bp.post("/grupos/<int:grupo_id>/despesas/<int:despesa_id>/excluir")
+def excluir_despesa(grupo_id, despesa_id):
+    grupo = db.get_or_404(Grupo, grupo_id)
+    despesa = db.get_or_404(Despesa, despesa_id)
+    if despesa.grupo_id != grupo.id:
+        abort(404)
+    db.session.delete(despesa)
     db.session.commit()
     return redirect(url_for("main.ver_grupo", grupo_id=grupo.id))

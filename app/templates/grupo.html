@@ -36,6 +36,9 @@
     {% for despesa in grupo.despesas|sort(attribute="id", reverse=True) %}
     <li>
       <span><strong>{{ despesa.descricao }}</strong> · {{ despesa.valor_centavos|brl }} · pago por {{ despesa.pagador.nome }}</span>
+      <form method="post" action="{{ url_for('main.excluir_despesa', grupo_id=grupo.id, despesa_id=despesa.id) }}">
+        <button type="submit" class="secondary outline" aria-label="Excluir despesa {{ despesa.descricao }}">Excluir</button>
+      </form>
     </li>
     {% endfor %}
   </ul>
