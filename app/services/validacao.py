@@ -9,3 +9,8 @@ def validar_nome(nome: str) -> str:
     if len(nome_validado) > 50:
         raise ValueError("O nome deve ter no máximo 50 caracteres.")
     return nome_validado
+
+def validar_valor(centavos: int) -> None:
+    """Exige um valor monetário positivo, expresso em centavos."""
+    if centavos <= 0:
+        raise ValueError("O valor deve ser maior que zero.")

@@ -1,7 +1,8 @@
 import pytest
 
 from app.services.validacao import (
-    validar_nome
+    validar_nome,
+    validar_valor
 )
 
 
@@ -17,3 +18,12 @@ def test_validar_nome_vazio_lanca_erro():
 def test_validar_nome_com_mais_de_cinquenta_caracteres_lanca_erro():
     with pytest.raises(ValueError):
         validar_nome("a" * 51)
+
+def test_validar_valor_zero_lanca_erro():
+    with pytest.raises(ValueError):
+        validar_valor(0)
+
+
+def test_validar_valor_negativo_lanca_erro():
+    with pytest.raises(ValueError):
+        validar_valor(-1)
