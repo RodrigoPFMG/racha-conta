@@ -4,6 +4,7 @@
 <div class="titulo-grupo">
   <a href="{{ url_for('main.index') }}">← Voltar aos grupos</a>
   <h1>{{ grupo.nome }}</h1>
+  <a href="{{ url_for('main.ver_saldos', grupo_id=grupo.id) }}">Ver saldos e acertos</a>
 </div>
 
 <article class="cartao">
