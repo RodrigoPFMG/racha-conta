@@ -10,3 +10,6 @@ coverage.xml
 htmlcov/
 test-results/
 .env
+
+# documentos de planejamento do grupo (não versionar)
+*.pdf
