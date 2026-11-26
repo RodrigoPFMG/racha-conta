@@ -1,6 +1,6 @@
 import pytest
 
-from app.services.dinheiro import formatar_brl, reais_para_centavos
+from app.services.dinheiro import dividir_igualmente, formatar_brl, reais_para_centavos
 
 
 def test_reais_para_centavos_com_virgula_converte():
@@ -48,3 +48,31 @@ def test_formatar_brl_menos_de_um_real_mostra_zero():
 
 def test_formatar_brl_negativo_mostra_sinal():
     assert formatar_brl(-3000) == "-R$ 30,00"
+
+
+def test_dividir_igualmente_com_sobra_da_centavo_extra_aos_primeiros():
+    assert dividir_igualmente(1000, 3) == [334, 333, 333]
+
+
+def test_dividir_igualmente_divisao_exata_partes_iguais():
+    assert dividir_igualmente(900, 3) == [300, 300, 300]
+
+
+def test_dividir_igualmente_soma_das_partes_igual_ao_total():
+    assert sum(dividir_igualmente(1001, 7)) == 1001
+
+
+def test_dividir_igualmente_diferenca_maxima_de_um_centavo():
+    partes = dividir_igualmente(1000, 6)
+
+    assert max(partes) - min(partes) <= 1
+
+
+def test_dividir_igualmente_por_zero_lanca_erro():
+    with pytest.raises(ValueError):
+        dividir_igualmente(1000, 0)
+
+
+def test_dividir_igualmente_por_negativo_lanca_erro():
+    with pytest.raises(ValueError):
+        dividir_igualmente(1000, -2)
