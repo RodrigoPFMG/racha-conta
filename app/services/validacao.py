@@ -14,3 +14,8 @@ def validar_valor(centavos: int) -> None:
     """Exige um valor monetário positivo, expresso em centavos."""
     if centavos <= 0:
         raise ValueError("O valor deve ser maior que zero.")
+
+def validar_pagador(pagador, membros) -> None:
+    """Exige que o pagador pertença ao grupo."""
+    if pagador not in membros:
+        raise ValueError("O pagador deve ser um membro do grupo.")
