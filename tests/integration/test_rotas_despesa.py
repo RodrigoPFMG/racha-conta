@@ -4,14 +4,6 @@ from app.models import Despesa
 
 
 @pytest.fixture
-def grupo_com_membros(client):
-    client.post("/grupos", data={"nome": "República"})
-    client.post("/grupos/1/membros", data={"nome": "Ana"})
-    client.post("/grupos/1/membros", data={"nome": "Bruno"})
-    return "/grupos/1"
-
-
-@pytest.fixture
 def despesa_valida():
     return {"descricao": "Mercado", "valor": "12,50", "pagador": "1", "participantes": ["1", "2"]}
 
@@ -139,7 +131,7 @@ def test_excluir_despesa_remove_da_lista(client, grupo_com_membros, despesa_vali
 
     resposta = client.get(grupo_com_membros)
 
-    assert "pago por Ana" not in resposta.get_data(as_text=True)
+    assert "Nenhuma despesa ainda." in resposta.get_data(as_text=True)
 
 
 def test_excluir_despesa_redireciona_para_o_grupo(client, grupo_com_membros, despesa_valida):
