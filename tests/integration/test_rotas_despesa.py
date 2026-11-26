@@ -83,3 +83,25 @@ def test_pagina_do_grupo_sem_membros_mostra_aviso_de_despesa(client):
     resposta = client.get("/grupos/1")
 
     assert "Adicione membros para registrar despesas." in resposta.get_data(as_text=True)
+
+
+def test_pagina_do_grupo_lista_despesa_com_valor_formatado(client, grupo_com_membros, despesa_valida):
+    client.post(f"{grupo_com_membros}/despesas", data=despesa_valida)
+
+    resposta = client.get(grupo_com_membros)
+
+    assert "R$ 12,50" in resposta.get_data(as_text=True)
+
+
+def test_pagina_do_grupo_lista_despesa_com_nome_do_pagador(client, grupo_com_membros, despesa_valida):
+    client.post(f"{grupo_com_membros}/despesas", data=despesa_valida)
+
+    resposta = client.get(grupo_com_membros)
+
+    assert "pago por Ana" in resposta.get_data(as_text=True)
+
+
+def test_pagina_do_grupo_sem_despesas_mostra_mensagem_vazia(client, grupo_com_membros):
+    resposta = client.get(grupo_com_membros)
+
+    assert "Nenhuma despesa ainda." in resposta.get_data(as_text=True)
