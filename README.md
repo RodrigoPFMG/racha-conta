@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/RodrigoPFMG/racha-conta/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/RodrigoPFMG/racha-conta/actions/workflows/ci.yml)
 
-**Produção:** _URL do Render (em breve)_
+**Produção:** https://racha-conta.onrender.com (plano free do Render: o primeiro acesso após um período parado pode levar ~1 min)
 
 ## Membros
 
