@@ -71,6 +71,32 @@ def test_registrar_despesa_pagador_de_outro_grupo_responde_400(client, grupo_com
     assert resposta.status_code == 400
 
 
+def test_registrar_despesa_sem_pagador_mostra_erro(client, grupo_com_membros, despesa_valida):
+    despesa_valida["pagador"] = ""
+
+    resposta = client.post(f"{grupo_com_membros}/despesas", data=despesa_valida)
+
+    assert "Escolha quem pagou." in resposta.get_data(as_text=True)
+
+
+def test_registrar_despesa_participante_nao_numerico_mostra_erro(client, grupo_com_membros, despesa_valida):
+    despesa_valida["participantes"] = ["Ana"]
+
+    resposta = client.post(f"{grupo_com_membros}/despesas", data=despesa_valida)
+
+    assert "Selecione ao menos um participante." in resposta.get_data(as_text=True)
+
+
+def test_registrar_despesa_participante_de_outro_grupo_nao_cria_despesa(client, grupo_com_membros, despesa_valida):
+    client.post("/grupos", data={"nome": "Viagem"})
+    client.post("/grupos/2/membros", data={"nome": "Carla"})
+    despesa_valida["participantes"] = ["1", "3"]
+
+    client.post(f"{grupo_com_membros}/despesas", data=despesa_valida)
+
+    assert Despesa.query.count() == 0
+
+
 def test_registrar_despesa_em_grupo_inexistente_responde_404(client, despesa_valida):
     resposta = client.post("/grupos/999/despesas", data=despesa_valida)
 
