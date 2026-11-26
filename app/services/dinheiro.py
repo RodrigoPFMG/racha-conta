@@ -27,3 +27,15 @@ def formatar_brl(centavos: int) -> str:
     reais, resto = divmod(abs(centavos), 100)
     reais_com_milhar = f"{reais:,}".replace(",", ".")
     return f"{sinal}R$ {reais_com_milhar},{resto:02d}"
+
+
+def dividir_igualmente(centavos: int, n: int) -> list[int]:
+    """Divide o total em n partes inteiras que somam exatamente o total.
+
+    Os centavos que sobram vão um a um para as primeiras partes, então
+    a diferença entre quaisquer duas partes é no máximo 1 centavo.
+    """
+    if n <= 0:
+        raise ValueError("É preciso dividir entre pelo menos uma pessoa.")
+    base, sobra = divmod(centavos, n)
+    return [base + 1] * sobra + [base] * (n - sobra)
