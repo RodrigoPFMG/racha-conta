@@ -1,0 +1,197 @@
+/* Tema do Racha Conta, aplicado por cima do Pico.css (variante jade). */
+
+:root {
+  --rc-verde: #0f9d76;
+  --rc-verde-escuro: #0b7a5c;
+  --rc-fundo-hero: linear-gradient(135deg, #0f9d76 0%, #127c8a 100%);
+  --rc-raio: 14px;
+  --pico-border-radius: 10px;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main.container {
+  flex: 1;
+  max-width: 880px;
+}
+
+/* Cabeçalho */
+.topo {
+  border-bottom: 1px solid var(--pico-muted-border-color);
+  background: var(--pico-background-color);
+}
+
+.topo nav { max-width: 880px; margin: 0 auto; }
+
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--pico-color);
+  text-decoration: none;
+}
+
+.marca-icone {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9px;
+  background: var(--rc-fundo-hero);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+/* Hero da home */
+.hero {
+  margin: 2rem 0 2.5rem;
+  padding: 2.5rem 2rem;
+  border-radius: var(--rc-raio);
+  background: var(--rc-fundo-hero);
+  color: #fff;
+}
+
+.hero h1 {
+  margin-bottom: .5rem;
+  color: #fff;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+}
+
+.hero p {
+  margin: 0;
+  color: rgba(255, 255, 255, .88);
+  font-size: 1.1rem;
+}
+
+/* Cartões */
+.cartao {
+  border-radius: var(--rc-raio);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 6px 24px rgba(15, 80, 70, .08);
+}
+
+.cartao > header {
+  border-radius: var(--rc-raio) var(--rc-raio) 0 0;
+}
+
+.cartao h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+/* Formulário com campo e botão na mesma linha */
+.linha-form {
+  display: flex;
+  gap: .75rem;
+  align-items: flex-start;
+}
+
+.linha-form input { margin-bottom: 0; flex: 1 1 auto; min-width: 0; }
+.linha-form button { margin-bottom: 0; width: auto; flex: 0 0 auto; white-space: nowrap; }
+
+/* Mensagem de erro do formulário */
+form [role="alert"] {
+  display: block;
+  margin-top: .4rem;
+  color: var(--pico-del-color);
+  font-weight: 600;
+}
+
+@media (max-width: 576px) {
+  .linha-form { flex-direction: column; align-items: stretch; }
+  .linha-form button { width: 100%; }
+}
+
+.cartao + section { margin-top: 2.5rem; }
+
+/* Lista de grupos em grade */
+.grade-grupos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.grade-grupos li { list-style: none; margin: 0; }
+
+.grade-grupos a {
+  display: block;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--rc-raio);
+  background: var(--pico-card-background-color);
+  color: var(--pico-color);
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+
+.grade-grupos a::after {
+  content: "→";
+  float: right;
+  color: var(--rc-verde);
+}
+
+.grade-grupos a:hover,
+.grade-grupos a:focus-visible {
+  transform: translateY(-2px);
+  border-color: var(--rc-verde);
+  box-shadow: 0 6px 20px rgba(15, 157, 118, .15);
+}
+
+/* Membros como "chips" */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.chips li {
+  list-style: none;
+  margin: 0;
+  padding: .3rem .85rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--rc-verde) 12%, transparent);
+  color: var(--rc-verde-escuro);
+  font-weight: 600;
+  font-size: .95rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .chips li { color: #6fe0bd; }
+}
+
+/* Estado vazio */
+.vazio {
+  color: var(--pico-muted-color);
+  font-style: italic;
+}
+
+/* Cabeçalho da página do grupo */
+.titulo-grupo {
+  margin: 2rem 0 1.5rem;
+}
+
+.titulo-grupo a {
+  font-size: .95rem;
+  text-decoration: none;
+}
+
+.titulo-grupo h1 { margin: .35rem 0 0; }
+
+/* Rodapé */
+.rodape {
+  padding: 1.5rem 0;
+  color: var(--pico-muted-color);
+  font-size: .85rem;
+  text-align: center;
+}

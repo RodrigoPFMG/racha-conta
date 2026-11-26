@@ -4,16 +4,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Racha Conta{% endblock %}</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.jade.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
 </head>
 <body>
-  <header class="container">
-    <nav>
-      <ul><li><a href="{{ url_for('main.index') }}"><strong>Racha Conta</strong></a></li></ul>
+  <header class="topo">
+    <nav class="container">
+      <ul>
+        <li>
+          <a class="marca" href="{{ url_for('main.index') }}">
+            <span class="marca-icone" aria-hidden="true">R$</span>
+            Racha Conta
+          </a>
+        </li>
+      </ul>
     </nav>
   </header>
   <main class="container">
     {% block content %}{% endblock %}
   </main>
+  <footer class="rodape">
+    Racha Conta · Engenharia de Software II · UFMG
+  </footer>
 </body>
 </html>
