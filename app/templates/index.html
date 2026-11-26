@@ -15,7 +15,7 @@
 {% if grupos %}
 <ul>
   {% for grupo in grupos %}
-  <li>{{ grupo.nome }}</li>
+  <li><a href="{{ url_for('main.ver_grupo', grupo_id=grupo.id) }}">{{ grupo.nome }}</a></li>
   {% endfor %}
 </ul>
 {% else %}

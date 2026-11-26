@@ -32,4 +32,10 @@ def criar_grupo():
     grupo = Grupo(nome=nome)
     db.session.add(grupo)
     db.session.commit()
-    return redirect(url_for("main.index"))
+    return redirect(url_for("main.ver_grupo", grupo_id=grupo.id))
+
+
+@bp.get("/grupos/<int:grupo_id>")
+def ver_grupo(grupo_id):
+    grupo = db.get_or_404(Grupo, grupo_id)
+    return render_template("grupo.html", grupo=grupo)
