@@ -2,4 +2,23 @@
 {% block content %}
 <h1>Racha Conta</h1>
 <p>Divida despesas entre amigos sem confusão.</p>
+
+<form method="post" action="{{ url_for('main.criar_grupo') }}">
+  <label for="nome-grupo">Nome do grupo</label>
+  <input id="nome-grupo" name="nome" type="text" placeholder="Ex.: República"
+         {% if erro %}aria-invalid="true" aria-describedby="erro-grupo"{% endif %}>
+  {% if erro %}<small id="erro-grupo" role="alert">{{ erro }}</small>{% endif %}
+  <button type="submit">Criar grupo</button>
+</form>
+
+<h2>Grupos</h2>
+{% if grupos %}
+<ul>
+  {% for grupo in grupos %}
+  <li><a href="{{ url_for('main.ver_grupo', grupo_id=grupo.id) }}">{{ grupo.nome }}</a></li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>Nenhum grupo ainda.</p>
+{% endif %}
 {% endblock %}

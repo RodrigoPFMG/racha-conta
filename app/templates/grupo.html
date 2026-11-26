@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{{ grupo.nome }} · Racha Conta{% endblock %}
+{% block content %}
+<h1>{{ grupo.nome }}</h1>
+
+<section>
+  <h2>Membros</h2>
+  {% if grupo.membros %}
+  <ul>
+    {% for membro in grupo.membros %}
+    <li>{{ membro.nome }}</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>Nenhum membro ainda.</p>
+  {% endif %}
+
+  <form method="post" action="{{ url_for('main.adicionar_membro', grupo_id=grupo.id) }}">
+    <label for="nome-membro">Nome do membro</label>
+    <input id="nome-membro" name="nome" type="text" placeholder="Ex.: Ana"
+           {% if erro %}aria-invalid="true" aria-describedby="erro-membro"{% endif %}>
+    {% if erro %}<small id="erro-membro" role="alert">{{ erro }}</small>{% endif %}
+    <button type="submit">Adicionar membro</button>
+  </form>
+</section>
+
+<p><a href="{{ url_for('main.index') }}">Voltar aos grupos</a></p>
+{% endblock %}
