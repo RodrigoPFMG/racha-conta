@@ -2,14 +2,6 @@ import pytest
 
 
 @pytest.fixture
-def grupo_com_membros(client):
-    client.post("/grupos", data={"nome": "República"})
-    client.post("/grupos/1/membros", data={"nome": "Ana"})
-    client.post("/grupos/1/membros", data={"nome": "Bruno"})
-    return "/grupos/1"
-
-
-@pytest.fixture
 def grupo_com_despesa(client, grupo_com_membros):
     client.post(f"{grupo_com_membros}/despesas", data={
         "descricao": "Mercado", "valor": "60,00", "pagador": "1", "participantes": ["1", "2"],
