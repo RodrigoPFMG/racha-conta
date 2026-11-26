@@ -15,3 +15,9 @@ ou foi corrigido, e o que aprendeu.
   testes de integração, um commit por rota. Ajustei o redirect pós-criação para
   abrir a página do grupo (fluxo que o E2E do João espera). A validação de nome
   ficou provisória na rota até o `validacao.py` do João entrar na `main`.
+
+- **Visual (tema sobre o Pico):** em vez de migrar para React (caro e arriscado
+  no prazo), pedi um CSS próprio por cima do Pico. A IA conferiu o resultado com
+  screenshots do Playwright e corrigiu o campo de texto espremido pelo botão.
+  No caminho apareceu um bug real: `pytest` sem argumentos falhava porque havia
+  dois `test_home.py`; resolvido com `--import-mode=importlib`.
