@@ -21,7 +21,10 @@ def create_app(config=None):
 
     db.init_app(app)
 
+    from app import models  # noqa: F401  registra os modelos
     from app.routes import bp
 
     app.register_blueprint(bp)
+    with app.app_context():
+        db.create_all()
     return app
