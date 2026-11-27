@@ -69,3 +69,15 @@ def test_tela_de_acertos_mostra_quem_paga_para_quem(page: Page, live_server):
     page.get_by_role("link", name="Ver saldos e acertos").click()
 
     expect(page.get_by_text("Bruno paga R$ 30,00 para Ana", exact=True)).to_be_visible()
+
+def test_excluir_despesa_atualiza_os_saldos(page: Page, live_server):
+    _criar_grupo(page, live_server, "Grupo exclusão")
+    _adicionar_dois_membros(page)
+    _registrar_despesa(page, "Mercado", "60,00")
+
+    page.get_by_role("button", name="Excluir despesa Mercado").click()
+    expect(page.get_by_text("Nenhuma despesa ainda.")).to_be_visible()
+
+    page.get_by_role("link", name="Ver saldos e acertos").click()
+
+    expect(page.get_by_text("Tudo quitado!", exact=True)).to_be_visible()
