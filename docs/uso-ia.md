@@ -46,3 +46,9 @@ ou foi corrigido, e o que aprendeu.
   da integração) e uma asserção negativa (`"pago por Ana" not in`) que passaria
   mesmo com a lista quebrada; troquei por "Nenhuma despesa ainda.". Aprendi a
   preferir asserções positivas.
+
+## João
+
+- **Aprendizado do fluxo de testes E2E (3.4)**: pedi ajuda para entender como utilizar o playwright codegen para gravar interações com a aplicação e transformar o código gerado em testes automatizados. Aprendi que o código do Codegen serve como ponto de partida, mas precisa ser revisado: substituir seletores frágeis por get_by_label e get_by_role, trocar a URL fixa pela fixture live_server do Rodrigo e finalizar cada teste com um expect(...) que valide o resultado esperado.
+
+- **Testes E2E com Playwright (3.5)**: pedi ao Claude ideias de cenários de testes para a aplicação e ajuda para implementar os testes com Playwright. Depois, pedi ajuda ao ChatGPT para entender como organizar test_home.py, as funções auxiliares e os expect. Também tirei dúvidas sobre os avisos do VS Code e a descoberta dos testes pelo pytest. Aprendi que funções auxiliares podem encapsular verificações, evitando repetição, e que cada teste precisa validar um resultado esperado.
