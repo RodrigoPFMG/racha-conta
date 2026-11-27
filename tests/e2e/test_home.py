@@ -50,3 +50,13 @@ def test_valor_invalido_mostra_erro_e_nao_cria_despesa(page: Page, live_server):
 
     expect(page.get_by_role("alert")).to_contain_text("Use o formato 12,50.")
     expect(page.get_by_text("Nenhuma despesa ainda.")).to_be_visible()
+
+def test_tela_de_saldos_mostra_quem_deve_e_quem_recebe(page: Page, live_server):
+    _criar_grupo(page, live_server, "Grupo saldos")
+    _adicionar_dois_membros(page)
+    _registrar_despesa(page, "Mercado", "60,00")
+
+    page.get_by_role("link", name="Ver saldos e acertos").click()
+
+    expect(page.get_by_role("row", name="Ana a receber R$ 30,00")).to_be_visible()
+    expect(page.get_by_role("row", name="Bruno deve R$ 30,00")).to_be_visible()
