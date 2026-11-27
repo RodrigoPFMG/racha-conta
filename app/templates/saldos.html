@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Saldos · {{ grupo.nome }} · Racha Conta{% endblock %}
+{% block content %}
+<div class="titulo-grupo">
+  <a href="{{ url_for('main.ver_grupo', grupo_id=grupo.id) }}">← Voltar ao grupo</a>
+  <h1>{{ grupo.nome }}</h1>
+</div>
+
+<article class="cartao">
+  <header><h2>Saldos</h2></header>
+  {% if grupo.membros %}
+  <table>
+    <thead>
+      <tr><th scope="col">Membro</th><th scope="col">Situação</th></tr>
+    </thead>
+    <tbody>
+      {% for membro in grupo.membros %}
+      {% set saldo = saldos[membro.id] %}
+      <tr>
+        <td>{{ membro.nome }}</td>
+        <td>{% if saldo > 0 %}a receber {{ saldo|brl }}{% elif saldo < 0 %}deve {{ (-saldo)|brl }}{% else %}quitado{% endif %}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="vazio">Nenhum membro ainda.</p>
+  {% endif %}
+</article>
+
+<article class="cartao">
+  <header><h2>Acertos sugeridos</h2></header>
+  {% if acertos %}
+  <ul class="lista-acertos">
+    {% for acerto in acertos %}
+    <li>{{ nomes[acerto.de] }} paga {{ acerto.centavos|brl }} para {{ nomes[acerto.para] }}</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="vazio">Tudo quitado!</p>
+  {% endif %}
+</article>
+{% endblock %}

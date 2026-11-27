@@ -5,6 +5,8 @@ from flask import Blueprint, abort, redirect, render_template, request, url_for
 from app import db
 from app.models import Despesa, Grupo, Membro
 from app.services import dinheiro, validacao
+from app.services.acertos import sugerir_acertos
+from app.services.saldos import DespesaDTO, calcular_saldos
 
 bp = Blueprint("main", __name__)
 
@@ -102,3 +104,27 @@ def excluir_despesa(grupo_id, despesa_id):
     db.session.delete(despesa)
     db.session.commit()
     return redirect(url_for("main.ver_grupo", grupo_id=grupo.id))
+
+
+def _para_dto(despesa):
+    return DespesaDTO(
+        pagador_id=despesa.pagador_id,
+        valor_centavos=despesa.valor_centavos,
+        participantes_ids=tuple(membro.id for membro in despesa.participantes),
+    )
+
+
+@bp.get("/grupos/<int:grupo_id>/saldos")
+def ver_saldos(grupo_id):
+    grupo = db.get_or_404(Grupo, grupo_id)
+    saldos = calcular_saldos(
+        [membro.id for membro in grupo.membros],
+        [_para_dto(despesa) for despesa in grupo.despesas],
+    )
+    return render_template(
+        "saldos.html",
+        grupo=grupo,
+        saldos=saldos,
+        acertos=sugerir_acertos(saldos),
+        nomes={membro.id: membro.nome for membro in grupo.membros},
+    )
