@@ -34,9 +34,15 @@ membro deve ou tem a receber e sugere os acertos ("Bruno paga R$ 30,00 para Ana"
 A lógica de negócio fica em `app/services/` como funções puras (sem Flask e sem
 banco), e todo valor monetário é guardado como inteiro em centavos.
 
-## Uso de IA
+## Uso de Inteligência Artificial
 
-_Seção em construção: será o resumo do diário em [`docs/uso-ia.md`](docs/uso-ia.md)._
+Durante o desenvolvimento, utilizamos ferramentas como Claude Code e ChatGPT para auxiliar na implementação de funcionalidades, criação e revisão de testes, configuração do ambiente e melhorias na interface.
+
+A IA foi utilizada como apoio no desenvolvimento em TDD, na criação de testes unitários, de integração e E2E com Playwright, além da revisão de código e identificação de problemas de configuração e cobertura.
+
+As sugestões geradas foram revisadas e ajustadas pela equipe. Entre os principais aprendizados estão a importância de utilizar valores monetários em centavos (`int`), escrever asserções positivas e claras, reutilizar fixtures e funções auxiliares e utilizar seletores acessíveis (`get_by_label` e `get_by_role`) nos testes E2E.
+
+A IA foi utilizada como ferramenta de apoio, mantendo a equipe responsável pelas decisões técnicas, validação e integração do código.
 
 ## Como rodar os testes localmente
 
