@@ -41,3 +41,12 @@ def test_registrar_despesa_mostra_valor_em_reais(page: Page, live_server):
     _registrar_despesa(page, "Mercado", "12,50")
 
     expect(page.get_by_text("Mercado · R$ 12,50 · pago por Ana")).to_be_visible()
+
+def test_valor_invalido_mostra_erro_e_nao_cria_despesa(page: Page, live_server):
+    _criar_grupo(page, live_server, "Grupo valor inválido")
+    _adicionar_dois_membros(page)
+
+    _registrar_despesa(page, "Mercado", "doze")
+
+    expect(page.get_by_role("alert")).to_contain_text("Use o formato 12,50.")
+    expect(page.get_by_text("Nenhuma despesa ainda.")).to_be_visible()
