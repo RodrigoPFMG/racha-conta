@@ -7,5 +7,23 @@ def _criar_grupo(page: Page, live_server: str, nome: str):
     page.get_by_role("button", name="Criar grupo").click()
     expect(page.get_by_role("heading", name=nome, level=1)).to_be_visible()
 
+def _adicionar_membro(page: Page, nome: str):
+    page.get_by_label("Nome do membro").fill(nome)
+    page.get_by_role("button", name="Adicionar membro").click()
+    expect(page.get_by_role("listitem").filter(has_text=nome)).to_be_visible()
+
+
+def _adicionar_dois_membros(page: Page):
+    _adicionar_membro(page, "Ana")
+    _adicionar_membro(page, "Bruno")
+
 def test_criar_grupo_abre_pagina_do_grupo(page: Page, live_server):
     _criar_grupo(page, live_server, "Grupo criação")
+
+def test_adicionar_dois_membros_mostra_lista(page: Page, live_server):
+    _criar_grupo(page, live_server, "Grupo membros")
+
+    _adicionar_dois_membros(page)
+
+    expect(page.get_by_role("listitem").filter(has_text="Ana")).to_be_visible()
+    expect(page.get_by_role("listitem").filter(has_text="Bruno")).to_be_visible()
