@@ -17,6 +17,12 @@ def _adicionar_dois_membros(page: Page):
     _adicionar_membro(page, "Ana")
     _adicionar_membro(page, "Bruno")
 
+def _registrar_despesa(page: Page, descricao: str, valor: str):
+    page.get_by_label("Descrição").fill(descricao)
+    page.get_by_label("Valor (R$)").fill(valor)
+    page.get_by_label("Quem pagou").select_option(label="Ana")
+    page.get_by_role("button", name="Registrar despesa").click()
+
 def test_criar_grupo_abre_pagina_do_grupo(page: Page, live_server):
     _criar_grupo(page, live_server, "Grupo criação")
 
@@ -27,3 +33,11 @@ def test_adicionar_dois_membros_mostra_lista(page: Page, live_server):
 
     expect(page.get_by_role("listitem").filter(has_text="Ana")).to_be_visible()
     expect(page.get_by_role("listitem").filter(has_text="Bruno")).to_be_visible()
+
+def test_registrar_despesa_mostra_valor_em_reais(page: Page, live_server):
+    _criar_grupo(page, live_server, "Grupo despesa")
+    _adicionar_dois_membros(page)
+
+    _registrar_despesa(page, "Mercado", "12,50")
+
+    expect(page.get_by_text("Mercado · R$ 12,50 · pago por Ana")).to_be_visible()
