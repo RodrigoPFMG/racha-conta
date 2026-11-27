@@ -28,4 +28,53 @@
     {% if erro %}<small id="erro-membro" role="alert">{{ erro }}</small>{% endif %}
   </form>
 </article>
+
+<article class="cartao">
+  <header><h2>Despesas</h2></header>
+  {% if grupo.despesas %}
+  <ul class="lista-despesas">
+    {% for despesa in grupo.despesas|sort(attribute="id", reverse=True) %}
+    <li>
+      <span><strong>{{ despesa.descricao }}</strong> · {{ despesa.valor_centavos|brl }} · pago por {{ despesa.pagador.nome }}</span>
+      <form method="post" action="{{ url_for('main.excluir_despesa', grupo_id=grupo.id, despesa_id=despesa.id) }}">
+        <button type="submit" class="secondary outline" aria-label="Excluir despesa {{ despesa.descricao }}">Excluir</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="vazio">Nenhuma despesa ainda.</p>
+  {% endif %}
+
+  {% if grupo.membros %}
+  <form method="post" action="{{ url_for('main.registrar_despesa', grupo_id=grupo.id) }}">
+    <label for="descricao-despesa">Descrição</label>
+    <input id="descricao-despesa" name="descricao" type="text" placeholder="Ex.: Mercado"
+           {% if erro_despesa %}aria-invalid="true" aria-describedby="erro-despesa"{% endif %}>
+
+    <label for="valor-despesa">Valor (R$)</label>
+    <input id="valor-despesa" name="valor" type="text" inputmode="decimal" placeholder="12,50"
+           {% if erro_despesa %}aria-invalid="true" aria-describedby="erro-despesa"{% endif %}>
+
+    <label for="pagador-despesa">Quem pagou</label>
+    <select id="pagador-despesa" name="pagador">
+      {% for membro in grupo.membros %}
+      <option value="{{ membro.id }}">{{ membro.nome }}</option>
+      {% endfor %}
+    </select>
+
+    <fieldset>
+      <legend>Dividir entre</legend>
+      {% for membro in grupo.membros %}
+      <label><input type="checkbox" name="participantes" value="{{ membro.id }}" checked> {{ membro.nome }}</label>
+      {% endfor %}
+    </fieldset>
+
+    {% if erro_despesa %}<small id="erro-despesa" role="alert">{{ erro_despesa }}</small>{% endif %}
+    <button type="submit">Registrar despesa</button>
+  </form>
+  {% else %}
+  <p class="vazio">Adicione membros para registrar despesas.</p>
+  {% endif %}
+</article>
 {% endblock %}

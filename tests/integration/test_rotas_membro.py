@@ -38,7 +38,13 @@ def test_adicionar_membro_nome_vazio_responde_400(client, grupo_criado):
 def test_adicionar_membro_nome_vazio_mostra_erro(client, grupo_criado):
     resposta = client.post(f"{grupo_criado}/membros", data={"nome": "  "})
 
-    assert "Informe um nome." in resposta.get_data(as_text=True)
+    assert "O nome não pode ficar vazio." in resposta.get_data(as_text=True)
+
+
+def test_adicionar_membro_nome_com_mais_de_50_caracteres_responde_400(client, grupo_criado):
+    resposta = client.post(f"{grupo_criado}/membros", data={"nome": "a" * 51})
+
+    assert resposta.status_code == 400
 
 
 def test_adicionar_membro_em_grupo_inexistente_responde_404(client):

@@ -27,7 +27,7 @@ def test_criar_grupo_nome_vazio_responde_400(client):
 def test_criar_grupo_nome_vazio_mostra_erro(client):
     resposta = client.post("/grupos", data={"nome": ""})
 
-    assert "Informe um nome." in resposta.get_data(as_text=True)
+    assert "O nome não pode ficar vazio." in resposta.get_data(as_text=True)
 
 
 def test_ver_grupo_existente_mostra_nome_no_titulo(client):

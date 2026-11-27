@@ -170,6 +170,33 @@ form [role="alert"] {
   .chips li { color: #6fe0bd; }
 }
 
+/* Lista de despesas */
+.lista-despesas {
+  padding: 0;
+  margin-bottom: 1.5rem;
+  list-style: none;
+}
+
+.lista-despesas li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .75rem;
+  margin: 0;
+  padding: .6rem 0;
+  border-bottom: 1px solid var(--pico-muted-border-color);
+  list-style: none;
+}
+
+.lista-despesas form { margin: 0; }
+
+.lista-despesas button {
+  margin: 0;
+  padding: .3rem .8rem;
+  width: auto;
+  font-size: .85rem;
+}
+
 /* Estado vazio */
 .vazio {
   color: var(--pico-muted-color);
